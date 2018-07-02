@@ -5,10 +5,10 @@ __pycache__/
 
 # C extensions
 *.so
-**/Test
-*Test
-**Test
-**/Test/**
+model_rnpd/*
+model/
+trained_657_model/
+tboard/
 # Distribution / packaging
 .Python
 env/
@@ -102,3 +102,5 @@ ENV/
 
 # mypy
 .mypy_cache/
+
+rnpd_2018-06-21-08-01-08.ckpt-39997

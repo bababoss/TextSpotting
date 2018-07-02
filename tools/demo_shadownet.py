@@ -8,7 +8,6 @@
 """
 Use shadow net to recognize the scene text
 """
-import glob, os,time
 import tensorflow as tf
 import os.path as ops
 import numpy as np
@@ -29,21 +28,19 @@ logger = log_utils.init_logger()
 
 def init_args():
     """
-
     :return:
     """
     parser = argparse.ArgumentParser()
     parser.add_argument('--image_path', type=str, help='Where you store the image',
-                        default='data/test_images/test_01.jpg')
+                        default='data/Test/frame23.jpg')
     parser.add_argument('--weights_path', type=str, help='Where you store the weights',
-                        default='model/shadownet/shadownet_2017-09-29-19-16-33.ckpt-39999')
+                        default='model_rnpd/rnpd_2018-06-21-08-01-08.ckpt-39999')
 
     return parser.parse_args()
 
 
 def recognize(image_path, weights_path, is_vis=True):
     """
-
     :param image_path:
     :param weights_path:
     :param is_vis:
@@ -84,10 +81,10 @@ def recognize(image_path, weights_path, is_vis=True):
 
         logger.info('Predict image {:s} label {:s}'.format(ops.split(image_path)[1], preds[0]))
 
-#        if is_vis:
-           # plt.figure('CRNN Model Demo')
-            #plt.imshow(cv2.imread(image_path, cv2.IMREAD_COLOR)[:, :, (2, 1, 0)])
-            #plt.show()
+        if is_vis:
+            plt.figure('CRNN Model Demo')
+            plt.imshow(cv2.imread(image_path, cv2.IMREAD_COLOR)[:, :, (2, 1, 0)])
+            plt.show()
 
         sess.close()
 
@@ -97,11 +94,8 @@ def recognize(image_path, weights_path, is_vis=True):
 if __name__ == '__main__':
     # Inti args
     args = init_args()
-    imlist=glob.glob("/home/cogknit/experiments/dataset/final_dataset_crop_660/*.jpg")
     if not ops.exists(args.image_path):
         raise ValueError('{:s} doesn\'t exist'.format(args.image_path))
 
     # recognize the image
-    for i in imlist[:10]:
-        time.sleep(4)
-        recognize(image_path=i, weights_path=args.weights_path)
+    recognize(image_path=args.image_path, weights_path=args.weights_path)

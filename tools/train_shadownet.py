@@ -53,10 +53,12 @@ def train_shadownet(dataset_dir, weights_path=None):
 
     # initializa the net model
     shadownet = crnn_model.ShadowNet(phase='Train', hidden_nums=256, layers_nums=2, seq_length=25, num_classes=37)
-
+    print(input_labels)
+ 
     with tf.variable_scope('shadow', reuse=False):
         net_out = shadownet.build_shadownet(inputdata=inputdata)
 
+    print(net_out)
     cost = tf.reduce_mean(tf.nn.ctc_loss(labels=input_labels, inputs=net_out, sequence_length=25*np.ones(32)))
 
     decoded, log_prob = tf.nn.ctc_beam_search_decoder(net_out, 25*np.ones(32), merge_repeated=False)
@@ -85,11 +87,11 @@ def train_shadownet(dataset_dir, weights_path=None):
 
     # Set saver configuration
     saver = tf.train.Saver()
-    model_save_dir = 'model/shadownet'
+    model_save_dir = '/home/gpu-machine/projects/TextSpotting/model_rnpd'
     if not ops.exists(model_save_dir):
         os.makedirs(model_save_dir)
     train_start_time = time.strftime('%Y-%m-%d-%H-%M-%S', time.localtime(time.time()))
-    model_name = 'shadownet_{:s}.ckpt'.format(str(train_start_time))
+    model_name = 'rnpd_{:s}.ckpt'.format(str(train_start_time))
     model_save_path = ops.join(model_save_dir, model_name)
 
     # Set sess configuration
