@@ -32,9 +32,9 @@ def init_args():
     """
     parser = argparse.ArgumentParser()
     parser.add_argument('--image_path', type=str, help='Where you store the image',
-                        default='data/Test/frame23.jpg')
+                        default='data/Test/set9_b1a9d844a9564d74947aa3421a2d8fe5.jpg')
     parser.add_argument('--weights_path', type=str, help='Where you store the weights',
-                        default='model_rnpd/rnpd_2018-06-21-08-01-08.ckpt-39999')
+                        default='model_rnpd/rnpd_2018-07-02-09-13-31.ckpt-39999')
 
     return parser.parse_args()
 
@@ -80,11 +80,11 @@ def recognize(image_path, weights_path, is_vis=True):
         preds = decoder.writer.sparse_tensor_to_str(preds[0])
 
         logger.info('Predict image {:s} label {:s}'.format(ops.split(image_path)[1], preds[0]))
-
-        if is_vis:
-            plt.figure('CRNN Model Demo')
-            plt.imshow(cv2.imread(image_path, cv2.IMREAD_COLOR)[:, :, (2, 1, 0)])
-            plt.show()
+        print("aaa: -----",ops.split(image_path)[1], preds[0])
+#         if is_vis:
+#             plt.figure('CRNN Model Demo')
+#             plt.imshow(cv2.imread(image_path, cv2.IMREAD_COLOR)[:, :, (2, 1, 0)])
+#             plt.show()
 
         sess.close()
 
